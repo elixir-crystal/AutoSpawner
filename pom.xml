@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.freeze-dolphin</groupId>
+    <artifactId>auto-spawner</artifactId>
+    <version>0.1.0</version>
+
+    <name>AutoSpawner</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <scala.version>2.12.8</scala.version>
+
+        <taboolib.lib-version>5.66</taboolib.lib-version>
+        <taboolib.loader-version>053100</taboolib.loader-version>
+        <taboolib.lib-download>true</taboolib.lib-download>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>taboo-repo</id>
+            <url>http://ptms.ink:8081/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.Redempt</groupId>
+            <artifactId>RedLib</artifactId>
+            <version>5.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ink.ptms.core</groupId>
+            <artifactId>v11605</artifactId>
+            <version>11605</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.izzel.taboolib</groupId>
+            <artifactId>TabooLib</artifactId>
+            <version>${taboolib.lib-version}</version>
+            <scope>provided</scope>
+            <classifier>all</classifier>
+        </dependency>
+        <dependency>
+            <groupId>io.izzel.taboolib</groupId>
+            <artifactId>TabooLibLoader</artifactId>
+            <version>${taboolib.loader-version}</version>
+            <scope>compile</scope>
+            <classifier>all</classifier>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name} v${project.version}</finalName>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>4.5.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>io.izzel.taboolib.loader</pattern>
+                            <shadedPattern>io.freeze_dolphin.auto_spawner.boot</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/**</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

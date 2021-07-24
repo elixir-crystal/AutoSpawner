@@ -1,0 +1,11 @@
+autospawner {
+
+    permission auto-spawner.cmd
+
+    give string:player string:variety {
+        permission auto-spawner.cmd.give
+        help Give specific player a spawner.
+        hook give
+    }
+
+}

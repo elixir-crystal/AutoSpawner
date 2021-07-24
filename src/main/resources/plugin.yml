@@ -1,0 +1,14 @@
+name: ${project.name}
+author: Freeze_Dolphin
+
+main: io.freeze_dolphin.auto_spawner.boot.PluginBoot
+
+version: ${project.version}
+api-version: 1.16
+
+lib-version: ${taboolib.lib-version}
+loader-version: ${taboolib.loader-version}
+lib-download: ${taboolib.lib-download}
+
+depend:
+  - RedLib
